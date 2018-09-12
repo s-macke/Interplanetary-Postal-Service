@@ -1,4 +1,4 @@
-# Interplanetary-Postal-Service
+# Interplanetary Postal Service
 
 ![Ingame Image](https://github.com/s-macke/Interplanetary-Postal-Service/blob/master/images/IPShigh.png)
 
