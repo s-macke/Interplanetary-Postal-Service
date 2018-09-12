@@ -3,11 +3,11 @@
 set -e
 
 # Generate compressed maps
+mkdir -p bin
 gcc maps/compress.c -o bin/compress
 ./bin/compress > gameWASM/maps.h
 
 # Generate wasm file
-mkdir -p bin
 emcc -Os -s TOTAL_MEMORY=16MB -o bin/game.html gameWASM/*.c
 
 # remove obsolete files
@@ -22,7 +22,7 @@ cp gameJS/* bin/
 mkdir -p minify
 cd minify
 cp ../tools/minify.js .
-#npm install
+npm install node-minify
 node minify.js
 
 # put all script directly into the html file
