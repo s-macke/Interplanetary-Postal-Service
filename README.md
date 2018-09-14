@@ -56,6 +56,7 @@ For collision detection I decided for a trivial but pixel perfect technique. The
 # Map
 
 The map is stored as a bitfield of size 32x17. So each map requires only 68 byte of space. This field is expanded over an gaussian kernel and some random texture on top. Together with trivial lightning you get a pretty decend and cheap level design.
+Here is an example of a map. A '*' is a one. A '-' is a zero.
 
 ```
 ********************************
@@ -79,10 +80,14 @@ The map is stored as a bitfield of size 32x17. So each map requires only 68 byte
 
 # Sound
 
-Sound is implemented extremely easy. You just take white noise and run it through an band-filter. Wind has a peak frequency 500Hz. Explosion and thrust work at 100Hz with different peak widths.
+Sound is implemented very easy. You just take white noise and run it through an band-filter. Wind has a peak frequency of around 500Hz. Explosion and thrust work at 100Hz with different peak widths.
 
 # Balancing
 
-Balancing the game was the most difficult part. The flow dynamics are not always controllable and the result varies depending on the FPS and your actions. Tiny changes on the algorithms let you redesign all levels again.
+Balancing the game was the most difficult part. The flow dynamics are not always controllable and the result varies depending on the FPS and your actions. Tiny changes on the algorithms or the free parameters let you redesign and balance all levels again and again.
 Although the game is challenging, I usually manage all levels on the first or second try.
 
+# The last 3kB
+
+At the end I realized that even without any massive compression tricks I had 3 kBs of available space left. I tried to introduce a touchpad control for mobiles. But then I realized, that most mobiles simply don't have enough power to run the game. Then I tried to introduce music. But my so called "music" made the experience much worse :-). So I skipped that two options. 
+I tried to introduce more levels. You can put 6-10 levels in 3 kB. But then I ran out of time. Polishing surely would have taken another one or two weeks. 
