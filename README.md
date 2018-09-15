@@ -2,7 +2,7 @@
 
 ![Ingame Image](https://github.com/s-macke/Interplanetary-Postal-Service/blob/master/images/IPShigh.png)
 
-This game is my entry to the 2018 [js13kgames](https://js13kgames.com) competition.
+This game is my [entry](https://js13kgames.com/entries/interplanetary-postal-service) to the 2018 [js13kgames](https://js13kgames.com) competition.
 
 # [Play it now!](https://simulationcorner.net/js13kgame/) 
 
