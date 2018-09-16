@@ -15,7 +15,7 @@ Control the game with your arrow keys or with WASD. Press Space to toggle sound.
 
 # Technical Description
 
-Fluid dynamics in a game, that was the goal. Not just a fake one. I wanted it real. Solving the real equations. So far I have only encountered two games with real fluid dynamics. [Plasma Pong](https://en.wikipedia.org/wiki/Plasma_Pong) and [Pixeljunk Shooter](https://en.wikipedia.org/wiki/PixelJunk_Shooter)
+Fluid dynamics in a game, that was the goal. Not just a fake one. I wanted it real. Solving the real equations. So far I have only encountered two games with real fluid dynamics (see below).
 
 Especially the last one is great and had motivated me for this game. Then the decision for a game type was easy. I chose a game from my distant path: Lunar Lander. The game type fits perfectly.
 
@@ -91,3 +91,9 @@ Although the game is challenging, I usually manage all levels on the first or se
 
 At the end I realized that even without any massive compression tricks I had 3 kBs of available space left. I tried to introduce a touchpad control for mobiles. But then I realized, that most mobiles simply don't have enough power to run the game. Then I tried to introduce music. But my so called "music" made the experience much worse :-). So I skipped that two options. 
 I tried to introduce more levels. You can put 6-10 levels in 3 kB. But then I ran out of time. Polishing surely would have taken another one or two weeks. 
+
+# Other games with fluid dynamics
+
+*  [Plasma Pong](https://en.wikipedia.org/wiki/Plasma_Pong) 
+*  [Pixeljunk Shooter](https://en.wikipedia.org/wiki/PixelJunk_Shooter)
+*  [Polluted Planet](http://grantkot.com/pollutedplanet/)
