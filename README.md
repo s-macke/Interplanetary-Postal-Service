@@ -101,3 +101,4 @@ I tried to introduce more levels. You can put 6-10 levels in 3 kB. But then I ra
 *  [Claybook](https://store.steampowered.com/app/108500/Vessel/)
 *  [Noita](https://store.steampowered.com/app/881100/Noita/)
 *  [Shoita](http://www.the2bears.com/?page_id=652)
+*  [Ichor](https://www.fun-motion.com/physics-games/ichor/)
