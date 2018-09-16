@@ -15,7 +15,7 @@ Control the game with your arrow keys or with WASD. Press Space to toggle sound.
 
 # Technical Description
 
-Fluid dynamics in a game, that was the goal. Not just a fake one. I wanted it real. Solving the real equations. So far I have only encountered two games with real fluid dynamics (see below).
+Fluid dynamics in a game, that was the goal. Not just a fake one. I wanted it real. Solving the real equations. So far I had only encountered two games with real fluid dynamics (see below).
 
 Especially the last one is great and had motivated me for this game. Then the decision for a game type was easy. I chose a game from my distant path: Lunar Lander. The game type fits perfectly.
 
@@ -97,3 +97,7 @@ I tried to introduce more levels. You can put 6-10 levels in 3 kB. But then I ra
 *  [Plasma Pong](https://en.wikipedia.org/wiki/Plasma_Pong) 
 *  [Pixeljunk Shooter](https://en.wikipedia.org/wiki/PixelJunk_Shooter)
 *  [Polluted Planet](http://grantkot.com/pollutedplanet/)
+*  [Bessel](https://store.steampowered.com/app/108500/Vessel/)
+*  [Claybook](https://store.steampowered.com/app/108500/Vessel/)
+*  [Noita](https://store.steampowered.com/app/881100/Noita/)
+*  [Shoita](http://www.the2bears.com/?page_id=652)
