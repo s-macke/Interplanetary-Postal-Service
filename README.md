@@ -4,6 +4,8 @@
 
 This game is my [entry](https://js13kgames.com/entries/interplanetary-postal-service) to the 2018 [js13kgames](https://js13kgames.com) competition.
 
+The original source for the game entry can be found [here](https://github.com/s-macke/Interplanetary-Postal-Service/tree/js13kgames)
+
 # [Play it now!](https://js13kgames.com/games/interplanetary-postal-service/index.html) 
 
 As a postman of the Interplanetary Postal Service your task is to deliver 
