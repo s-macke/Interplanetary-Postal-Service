@@ -50,6 +50,6 @@ void ConvertMaps(char *filename, char *name, int n)
 
 int main()
 {
-  ConvertMaps("maps/maps.txt", "maps", 8);
+  ConvertMaps("src/maps/maps.txt", "maps", 8);
   return 0;
 }

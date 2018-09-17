@@ -4,11 +4,11 @@ set -e
 
 # Generate compressed maps
 mkdir -p bin
-gcc maps/compress.c -o bin/compress
-./bin/compress > gameWASM/maps.h
+gcc src/maps/compress.c -o bin/compress
+./bin/compress > src/wasm/maps.h
 
 # Generate wasm file
-emcc -Os -s TOTAL_MEMORY=16MB -o bin/game.html gameWASM/*.c
+emcc -Os -s TOTAL_MEMORY=16MB -o bin/game.html src/wasm/*.c
 
 # remove obsolete files
 rm bin/game.js
@@ -16,12 +16,12 @@ rm bin/game.html
 
 # copy JS file into bin directory.
 # The game can be tested in this directory
-cp gameJS/* bin/
+cp src/js/* bin/
 
 # minify
 mkdir -p minify
 cd minify
-cp ../tools/minify.js .
+cp ../src/tools/minify.js .
 npm install node-minify
 node minify.js
 
@@ -49,5 +49,5 @@ zip -T $FILENAME
 stat --printf="size = %s\n" Interplanetary_Postal_Lander_minified.zip
 
 rm -f Interplanetary_Postal_Lander.zip
-zip Interplanetary_Postal_Lander.zip compile.sh gameJS/* gameWASM/* maps/* tools/*
+zip Interplanetary_Postal_Lander.zip compile.sh src/*
 
