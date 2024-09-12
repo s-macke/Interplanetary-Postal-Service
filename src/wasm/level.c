@@ -180,11 +180,11 @@ void SetLevelStep(int level, float dt)
 
             for(int i=128-10; i<=128+10; i++)
             {
-                vy[M-32][i] = -0.7;
-                density2[M-32][i] += 4.*dt;
-                density2[M-31][i] += 4.*dt;
-                density2[M-30][i] += 1.*dt;
-                density2[M-29][i] += 1.*dt;
+                vy[M-32][i] = -1.7f;
+                density2[M-32][i] += 1.f*dt;
+                density2[M-31][i] += 1.f*dt;
+                density2[M-30][i] += 0.2f*dt;
+                density2[M-29][i] += 0.2f*dt;
             }
             break;
 
