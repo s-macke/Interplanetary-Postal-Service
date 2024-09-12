@@ -1,4 +1,3 @@
-#include<emscripten.h>
 #include"utils.h"
 #include"ship.h"
 
@@ -27,14 +26,14 @@ void ShipInit(int x, int y)
     s.fuel = 1000.;
 }
 
-void EMSCRIPTEN_KEEPALIVE ShipSetActive()
+void __attribute__((export_name("_ShipSetActive"))) ShipSetActive()
 {
     s.isActive = 1;
     s.f.x = 0.;
     s.f.y = 0.;
 }
 
-int EMSCRIPTEN_KEEPALIVE IsExploded()
+int __attribute__((export_name("_IsExploded"))) IsExploded()
 {
     return s.isExploded;
 }
@@ -59,17 +58,17 @@ void ShipStep(float dt)
     s.f.y = -s.v.y*0.1 + gravity;
 }
 
-float EMSCRIPTEN_KEEPALIVE ShipGetX()
+float __attribute__((export_name("_ShipGetX"))) ShipGetX()
 {
     return s.r.x;
 }
 
-float EMSCRIPTEN_KEEPALIVE ShipGetY()
+float __attribute__((export_name("_ShipGetY"))) ShipGetY()
 {
     return s.r.y;
 }
 
-float EMSCRIPTEN_KEEPALIVE ShipGetVY()
+float __attribute__((export_name("_ShipGetVY"))) ShipGetVY()
 {
     return s.v.y;
 }

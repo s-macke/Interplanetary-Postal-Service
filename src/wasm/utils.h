@@ -11,7 +11,7 @@ typedef struct
     float r, g, b;
 } Color;
 
-int Color2RGB(Color c);
+unsigned int Color2RGB(Color c);
 Color RGB2Color(int color);
 
 void AddDensity(Color *c, Color *gasc, float d);
@@ -24,5 +24,7 @@ float sqrtf_fast(float x);
 float cosf_fast(float x);
 float sinf_fast(float x);
 float expf_fast(float a);
+
+unsigned int rand(void);
 
 #endif

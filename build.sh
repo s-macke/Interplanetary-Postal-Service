@@ -8,15 +8,18 @@ gcc src/maps/compress.c -o bin/compress
 ./bin/compress > src/wasm/maps.h
 
 # Generate wasm file
-emcc -Os -s TOTAL_MEMORY=16MB -o bin/game.html src/wasm/*.c
+make clean
+make
 
-# remove obsolete files
-rm bin/game.js
-rm bin/game.html
+wasm-dis bin/game.wasm  | grep '(export\|(import\|(global \$'
+
+ls -la bin/game.wasm
 
 # copy JS file into bin directory.
 # The game can be tested in this directory
 cp src/js/* bin/
+
+exit 1
 
 # minify
 mkdir -p minify

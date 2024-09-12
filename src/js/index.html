@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Fluid dynamics game</title>
+    <title>Interplanetary Postal Service</title>
     <meta charset="UTF-8">
     <style>
-        body
-        {
+        body {
             margin: 0;
             height: 100%;
             overflow: hidden;
@@ -16,89 +15,109 @@
             -webkit-user-select: none;
         }
 
-        svg, canvas
-        {
+        svg, canvas {
             position: absolute;
             margin-left: auto;
             margin-right: auto;
         }
-        text
-        {
+
+        text {
             font-family: "Arial", Times, serif;
         }
-        #info, #shipsleft
-        {
+
+        #info, #shipsleft {
             font-size: 3px;
             color: white;
         }
-        #timertext, #leveltext
-        {
+
+        #timertext, #leveltext {
             font-size: 50px;
             color: #000000;
             stroke: #FFFFFF;
             stroke-width: 0.5px;
             stroke-linecap: butt;
-            stroke-linejoin: miter;            
-         }
-         .v
-         {
-            stroke:rgb(0,0,0);
-            stroke-width:0.5;
-         }
+            stroke-linejoin: miter;
+        }
+
+        .v {
+            stroke: rgb(0, 0, 0);
+            stroke-width: 0.5;
+        }
 
     </style>
     <script src="audio.js"></script>
     <script src="game.js"></script>
     <script src="level.js"></script>
-
 </head>
-<body scroll="no" onload="Main()">
-        
-<canvas id="fluidcanvas" width="256" height="128"></canvas>
-<canvas id="overlaycanvas" width="1024" height="512"></canvas>
 
-<svg id="svg" viewBox="0 0 256 128">
+<body scroll="no" onload="Main()">
+
+<canvas id="fluidcanvas" width="256" height="128" style="z-index: 1;"></canvas>
+<canvas id="overlaycanvas" width="1024" height="512" style="z-index: 2;"></canvas>
+
+<svg id="svg" viewBox="0 0 256 128" style="z-index: 3;">
     <text id="timertext" text-anchor="middle" x="128" y="64"></text>
     <text id="leveltext" style="font-size: 20px;" text-anchor="middle" x="128" y="124"></text>
     <text id="info" x="1" y="4" style="fill:rgba(255,255,255);"></text>
     <g id="fuelbar">
-        <rect x=5 y=20 width="10" height="70" style="fill:rgba(255,255,255,0.5);stroke-width:0.5;stroke:rgb(0,0,0)"></rect>
+        <rect x=5 y=20 width="10" height="70"
+              style="fill:rgba(255,255,255,0.5);stroke-width:0.5;stroke:rgb(0,0,0)"></rect>
         <rect id="fuel" x=5 y=20 width="10" height="70" style="fill:rgba(50,50,100,0.8);stroke-width:0;"></rect>
         <text x="7.5" y="25" style="font-size: 5px;">⛽</text>
     </g>
     <text id="shipsleft" x="5" y="18" style="fill:rgba(255,255,255);"></text>
 
     <g id="velocitybar">
-        <rect x=240 y=10 width="5" height="100" style="fill:rgba(255,255,255,0.2);stroke-width:0.5;stroke:rgb(0,0,0)"></rect>
+        <rect x=240 y=10 width="5" height="100"
+              style="fill:rgba(255,255,255,0.2);stroke-width:0.5;stroke:rgb(0,0,0)"></rect>
         <rect x=240 y=60 width="5" height="10" style="fill:rgba(0,255,0,0.8);stroke-width:0.;"></rect>
         <text x="236" y="62" style="font-size: 5px;">0</text>
         <g class="v">
-        <line x1="240" y1="15" x2="242" y2="15"/>   <line x1="243" y1="15" x2="245" y2="15"/>
-        <line x1="240" y1="20" x2="242" y2="20"/>   <line x1="243" y1="20" x2="245" y2="20"/>
-        <line x1="240" y1="25" x2="242" y2="25"/>   <line x1="243" y1="25" x2="245" y2="25"/>
-        <line x1="240" y1="30" x2="242" y2="30"/>   <line x1="243" y1="30" x2="245" y2="30"/>
-        <line x1="240" y1="35" x2="242" y2="35"/>   <line x1="243" y1="35" x2="245" y2="35"/>
-        <line x1="240" y1="40" x2="242" y2="40"/>   <line x1="243" y1="40" x2="245" y2="40"/>
-        <line x1="240" y1="45" x2="242" y2="45"/>   <line x1="243" y1="45" x2="245" y2="45"/>
-        <line x1="240" y1="50" x2="242" y2="50"/>   <line x1="243" y1="50" x2="245" y2="50"/>
-        <line x1="240" y1="55" x2="242" y2="55"/>   <line x1="243" y1="55" x2="245" y2="55"/>
-        <line x1="240" y1="60" x2="242" y2="60"/>   <line x1="243" y1="60" x2="245" y2="60"/>
-        <line x1="240" y1="65" x2="242" y2="65"/>   <line x1="243" y1="65" x2="245" y2="65"/>
-        <line x1="240" y1="70" x2="242" y2="70"/>   <line x1="243" y1="70" x2="245" y2="70"/>
-        <line x1="240" y1="75" x2="242" y2="75"/>   <line x1="243" y1="75" x2="245" y2="75"/>
-        <line x1="240" y1="80" x2="242" y2="80"/>   <line x1="243" y1="80" x2="245" y2="80"/>
-        <line x1="240" y1="85" x2="242" y2="85"/>   <line x1="243" y1="85" x2="245" y2="85"/>
-        <line x1="240" y1="90" x2="242" y2="90"/>   <line x1="243" y1="90" x2="245" y2="90"/>
-        <line x1="240" y1="95" x2="242" y2="95"/>   <line x1="243" y1="95" x2="245" y2="95"/>
-        <line x1="240" y1="100" x2="242" y2="100"/> <line x1="243" y1="100" x2="245" y2="100"/>
-        <line x1="240" y1="105" x2="242" y2="105"/> <line x1="243" y1="105" x2="245" y2="105"/>
-        <line x1="240" y1="110" x2="242" y2="110"/> <line x1="243" y1="110" x2="245" y2="110"/>
+            <line x1="240" y1="15" x2="242" y2="15"/>
+            <line x1="243" y1="15" x2="245" y2="15"/>
+            <line x1="240" y1="20" x2="242" y2="20"/>
+            <line x1="243" y1="20" x2="245" y2="20"/>
+            <line x1="240" y1="25" x2="242" y2="25"/>
+            <line x1="243" y1="25" x2="245" y2="25"/>
+            <line x1="240" y1="30" x2="242" y2="30"/>
+            <line x1="243" y1="30" x2="245" y2="30"/>
+            <line x1="240" y1="35" x2="242" y2="35"/>
+            <line x1="243" y1="35" x2="245" y2="35"/>
+            <line x1="240" y1="40" x2="242" y2="40"/>
+            <line x1="243" y1="40" x2="245" y2="40"/>
+            <line x1="240" y1="45" x2="242" y2="45"/>
+            <line x1="243" y1="45" x2="245" y2="45"/>
+            <line x1="240" y1="50" x2="242" y2="50"/>
+            <line x1="243" y1="50" x2="245" y2="50"/>
+            <line x1="240" y1="55" x2="242" y2="55"/>
+            <line x1="243" y1="55" x2="245" y2="55"/>
+            <line x1="240" y1="60" x2="242" y2="60"/>
+            <line x1="243" y1="60" x2="245" y2="60"/>
+            <line x1="240" y1="65" x2="242" y2="65"/>
+            <line x1="243" y1="65" x2="245" y2="65"/>
+            <line x1="240" y1="70" x2="242" y2="70"/>
+            <line x1="243" y1="70" x2="245" y2="70"/>
+            <line x1="240" y1="75" x2="242" y2="75"/>
+            <line x1="243" y1="75" x2="245" y2="75"/>
+            <line x1="240" y1="80" x2="242" y2="80"/>
+            <line x1="243" y1="80" x2="245" y2="80"/>
+            <line x1="240" y1="85" x2="242" y2="85"/>
+            <line x1="243" y1="85" x2="245" y2="85"/>
+            <line x1="240" y1="90" x2="242" y2="90"/>
+            <line x1="243" y1="90" x2="245" y2="90"/>
+            <line x1="240" y1="95" x2="242" y2="95"/>
+            <line x1="243" y1="95" x2="245" y2="95"/>
+            <line x1="240" y1="100" x2="242" y2="100"/>
+            <line x1="243" y1="100" x2="245" y2="100"/>
+            <line x1="240" y1="105" x2="242" y2="105"/>
+            <line x1="243" y1="105" x2="245" y2="105"/>
+            <line x1="240" y1="110" x2="242" y2="110"/>
+            <line x1="243" y1="110" x2="245" y2="110"/>
         </g>
-        <line id="velocity" x1="240" y1="60" x2="245" y2="60" style="stroke:rgb(255,255,255);stroke-width:1" />
+        <line id="velocity" x1="240" y1="60" x2="245" y2="60" style="stroke:rgb(255,255,255);stroke-width:1"/>
     </g>
 
-</svg>        
-    
+</svg>
 
 </body>
 </html>

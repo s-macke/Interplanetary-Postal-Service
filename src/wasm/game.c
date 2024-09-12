@@ -20,17 +20,17 @@ typedef struct
 
 Keys keys;
 
-float EMSCRIPTEN_KEEPALIVE GetTime()
+float __attribute__((export_name("_GetTime"))) GetTime()
 {
     return t;
 }
 
-int EMSCRIPTEN_KEEPALIVE GetMapsOffset()
+int __attribute__((export_name("_GetMapsOffset"))) GetMapsOffset()
 {
     return (int)maps;
 }
 
-void EMSCRIPTEN_KEEPALIVE SetKeys(int u, int d, int r, int l)
+void __attribute__((export_name("_SetKeys"))) SetKeys(int u, int d, int r, int l)
 {
     keys.u = u;
     keys.d = d;
@@ -38,18 +38,18 @@ void EMSCRIPTEN_KEEPALIVE SetKeys(int u, int d, int r, int l)
     keys.l = l;
 }
 
-void EMSCRIPTEN_KEEPALIVE Init()
+void __attribute__((export_name("_Init"))) Init()
 {
-    dt = 0.05;
+    dt = 0.05f;
     realtime = -1.;
     ColorInit(256, 128);
     FluidInit(256, 128, 20);
     ShipInit(-1000, -1000); // outside of screen
 }
 
-void EMSCRIPTEN_KEEPALIVE Reset(int _level, int _bgcolor1, int _bgcolor2, int _density2color, int x, int y)
+void __attribute__((export_name("_Reset"))) Reset(int _level, int _bgcolor1, int _bgcolor2, int _density2color, int x, int y)
 {
-    dt = 0.05;
+    dt = 0.05f;
     realtime = -1.;
     level = _level;
     bgcolor1 = RGB2Color(_bgcolor1);
@@ -59,19 +59,19 @@ void EMSCRIPTEN_KEEPALIVE Reset(int _level, int _bgcolor1, int _bgcolor2, int _d
     ShipInit(x, y);
 }
 
-void EMSCRIPTEN_KEEPALIVE Destroyed()
+void __attribute__((export_name("_Destroyed"))) Destroyed()
 {
     Explode(s.r.x+0.5, s.r.y+0.5);
     s.isExploded = 1;
     s.isActive = 0;
 }
 
-float EMSCRIPTEN_KEEPALIVE GetFuel()
+float __attribute__((export_name("_GetFuel"))) GetFuel()
 {
     return s.fuel;
 }
 
-int EMSCRIPTEN_KEEPALIVE IsThrustOn()
+int __attribute__((export_name("_IsThrustOn"))) IsThrustOn()
 {
     if (s.fuel <= 0) return 0;
     if (s.isExploded) return 0;
@@ -81,7 +81,7 @@ int EMSCRIPTEN_KEEPALIVE IsThrustOn()
 
 void Thrust(int x, int y, float sx, float sy)
 {    
-    s.fuel -= (keys.r + keys.l + keys.d + keys.u) * dt * 7.;
+    s.fuel -= (keys.r + keys.l + keys.d + keys.u) * dt * 7.f;
     if (s.fuel < 0.001)
     {
         s.fuel = 0;        
@@ -90,8 +90,8 @@ void Thrust(int x, int y, float sx, float sy)
     
     ShipAddForce
     (
-        (keys.r - keys.l)*1., 
-        (keys.d - keys.u)*1.
+        (keys.r - keys.l)*1.f,
+        (keys.d - keys.u)*1.f
     );
 
     if (keys.u)
@@ -171,7 +171,7 @@ void ShipFluidInteractionStep()
 /*
  * Calculate timestep
  */ 
-void EMSCRIPTEN_KEEPALIVE Step(double _realtime, int simulateShip)
+void __attribute__((export_name("_Step"))) Step(double _realtime, int simulateShip)
 {
     if (realtime <= 0)
     {

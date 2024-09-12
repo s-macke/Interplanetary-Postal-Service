@@ -1,4 +1,3 @@
-#include<emscripten.h>
 #include"utils.h"
 #include"fluid.h"
 #include"game.h"
@@ -25,7 +24,7 @@ float **p, **divergence;
 int **cell;
 
 // Provides the pointer to the cell array
-int EMSCRIPTEN_KEEPALIVE GetBoundaryOffset()
+int __attribute__((export_name("_GetBoundaryOffset"))) GetBoundaryOffset()
 {
     return (int)&cell[0][0];
 }
@@ -36,15 +35,15 @@ void FluidReset()
     for(int i=0; i<=N+1; i++)
     for(int j=0; j<=M+1; j++)
     {
-        density1[j][i] = 0.;
-        prevdensity1[j][i] = 0.;
-        density2[j][i] = 0.;
-        prevdensity2[j][i] = 0.;
-        density3[j][i] = 0.;
-        prevdensity3[j][i] = 0.;
+        density1[j][i] = 0.f;
+        prevdensity1[j][i] = 0.f;
+        density2[j][i] = 0.f;
+        prevdensity2[j][i] = 0.f;
+        density3[j][i] = 0.f;
+        prevdensity3[j][i] = 0.f;
         cell[j][i] = FLUID;
-        vx[j][i] = 0.;
-        vy[j][i] = 0.;
+        vx[j][i] = 0.f;
+        vy[j][i] = 0.f;
     }
 }
 
@@ -428,7 +427,7 @@ void Project()
 }
 
 // just fix some unusual boundaries for stability reasons. Define inner boundary
-void EMSCRIPTEN_KEEPALIVE FixCells()
+void __attribute__((export_name("_FixCells"))) FixCells()
 {
     // Set edges as boundary
     for (int i = 0; i<= N+1; i++)

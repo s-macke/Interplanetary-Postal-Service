@@ -1,4 +1,3 @@
-#include<emscripten.h>
 #include"colorize.h"
 #include"fluid.h"
 
@@ -14,7 +13,7 @@ float shadingStrength;
 
 int **color;
 
-int EMSCRIPTEN_KEEPALIVE GetColorOffset()
+int __attribute__((export_name("_GetColorOffset"))) GetColorOffset()
 {
     return (int)&color[0][0];
 }

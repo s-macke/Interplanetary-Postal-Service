@@ -2,7 +2,7 @@ var compressor = require('node-minify');
 
 compressor.minify({
   compressor: 'butternut',
-  input: '../gameJS/game.js',
+  input: '../src/js/game.js',
   output: 'game.js',
   callback: function(err, min) {console.log(err);},
   options: {
@@ -12,7 +12,7 @@ compressor.minify({
 
 compressor.minify({
     compressor: 'butternut',
-    input: '../gameJS/level.js',
+    input: '../src/js/level.js',
     output: 'level.js',
     callback: function(err, min) {console.log(err);},
     options: {
@@ -22,7 +22,7 @@ compressor.minify({
 
 compressor.minify({
     compressor: 'butternut',
-    input: '../gameJS/audio.js',
+    input: '../src/js/audio.js',
     output: 'audio.js',
     callback: function(err, min) {console.log(err);},
     options: {
@@ -33,7 +33,7 @@ compressor.minify({
 
 compressor.minify({
   compressor: 'html-minifier',
-  input: '../gameJS/index.html',
+  input: '../src/js/index.html',
   output: 'index.html',
   callback: function(err, min) {console.log(err);}
 });

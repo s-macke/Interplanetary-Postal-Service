@@ -18,7 +18,7 @@ typedef struct
 
 extern Ship s;
 
-void ShipInit();
+void ShipInit(int x, int y);
 void ShipStep(float dt);
 void ShipAddForce(float x, float y);
 

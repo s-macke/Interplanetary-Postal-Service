@@ -1,9 +1,9 @@
-function AudioClass()
-{
+"use strict";
+
+function AudioClass() {
     this.initialized = false;
 
-    this.Init = function()
-    {
+    this.Init = function () {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
         this.bufferSize = 2 * this.audioContext.sampleRate; // 2 seconds of noise
@@ -22,19 +22,17 @@ function AudioClass()
         this.initialized = true;
     }
 
-    this.CreateNoiseNodes = function()
-    {
+    this.CreateNoiseNodes = function () {
         let biquadFilter = this.audioContext.createBiquadFilter();
         let gainNode = this.audioContext.createGain();
         gainNode.gain.value = 0.;
         this.whiteNoise.connect(biquadFilter);
         biquadFilter.connect(gainNode);
         gainNode.connect(this.audioContext.destination);
-        return { gain: gainNode, filter: biquadFilter }
+        return {gain: gainNode, filter: biquadFilter}
     }
 
-    this.CreateNodesforBeep = function() 
-    {
+    this.CreateNodesforBeep = function () {
         let osc = this.audioContext.createOscillator();
         osc.type = "sine";
         osc.frequency.value = 500;
@@ -43,55 +41,53 @@ function AudioClass()
         gainNode.gain.value = 0.;
         osc.connect(gainNode);
         gainNode.connect(this.audioContext.destination);
-        return { gain: gainNode }
+        return {gain: gainNode}
     }
 
-    this.Beep = function()
-    {
+    this.Beep = function () {
         if (!this.initialized) return;
         let nodes = this.beep;
         let now = this.audioContext.currentTime;
         nodes.gain.gain.setValueAtTime(0.5, now);
-        nodes.gain.gain.setValueAtTime(0., now+0.2);
+        nodes.gain.gain.setValueAtTime(0., now + 0.2);
     }
 
     this.filterindex = 0;
-    this.SingleWind = function()
-    {
+    this.SingleWind = function () {
         let nodes = this.windnodes[this.filterindex];
         if (nodes.gain == null) return;
         this.filterindex++;
-        if (this.filterindex >= 4) this.filterindex = 0;        
+        if (this.filterindex >= 4) this.filterindex = 0;
 
         nodes.gain.gain.value = 0.;
         nodes.filter.type = "bandpass";
-        nodes.filter.frequency.value = 400. + Math.random()*300.;
+        nodes.filter.frequency.value = 400. + Math.random() * 300.;
         nodes.filter.Q.value = 10.;
-        
-        let attacktime = Math.random()*5 + 2; // between 2 and 8 seconds
-        let releasetime = Math.random()*3 + 5; // between 5 and 8 seconds
-        
+
+        let attacktime = Math.random() * 5 + 2; // between 2 and 8 seconds
+        let releasetime = Math.random() * 3 + 5; // between 5 and 8 seconds
+
         let now = this.audioContext.currentTime;
         nodes.filter.detune.cancelScheduledValues(now);
         nodes.filter.detune.setValueAtTime(0., now);
-        nodes.filter.detune.linearRampToValueAtTime(Math.random()*200-100, now + attacktime+releasetime);
+        nodes.filter.detune.linearRampToValueAtTime(Math.random() * 200 - 100, now + attacktime + releasetime);
 
         nodes.gain.gain.cancelScheduledValues(now);
-        nodes.gain.gain.setValueAtTime(0., now+0.01);
-        nodes.gain.gain.linearRampToValueAtTime(Math.random()*0.5+0.3, now + attacktime);
+        nodes.gain.gain.setValueAtTime(0., now + 0.01);
+        nodes.gain.gain.linearRampToValueAtTime(Math.random() * 0.5 + 0.3, now + attacktime);
         nodes.gain.gain.linearRampToValueAtTime(0., now + attacktime + releasetime);
     }
 
-    this.Wind = function()
-    {
+    this.Wind = function () {
         if (!this.initialized) return;
         this.SingleWind();
         this.SingleWind();
-        setInterval(function(){ this.SingleWind() }.bind(this), 5000);
+        setInterval(function () {
+            this.SingleWind()
+        }.bind(this), 5000);
     }
 
-    this.Explosion = function()
-    {
+    this.Explosion = function () {
         if (!this.initialized) return;
         let now = this.audioContext.currentTime;
         let nodes = this.explosion;
@@ -104,8 +100,7 @@ function AudioClass()
         nodes.gain.gain.linearRampToValueAtTime(0., now + 3);
     }
 
-    this.ThrustOn = function()
-    {
+    this.ThrustOn = function () {
         if (!this.initialized) return;
         let now = this.audioContext.currentTime;
         let nodes = this.thrust;
@@ -116,29 +111,23 @@ function AudioClass()
         nodes.gain.gain.value = 5.;
     }
 
-    this.ThrustOff = function()
-    {
+    this.ThrustOff = function () {
         if (!this.initialized) return;
         let nodes = this.thrust;
         if (nodes.gain == null) return;
-        nodes.gain.gain.value = 0.;        
+        nodes.gain.gain.value = 0.;
     }
 
-    this.EnableDisable = function() {
+    this.EnableDisable = function () {
         if (!this.initialized) return;
-        if(this.audioContext.state === 'running') 
-        {
-            this.audioContext.suspend().then(function()
-            {
+        if (this.audioContext.state === 'running') {
+            this.audioContext.suspend().then(function () {
             });
-        } else 
-        if(this.audioContext.state === 'suspended')
-        {
-            this.audioContext.resume().then(function() 
-            {
+        } else if (this.audioContext.state === 'suspended') {
+            this.audioContext.resume().then(function () {
             });
         }
-      }
+    }
 
 
     this.Init();
