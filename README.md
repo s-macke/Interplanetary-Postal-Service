@@ -6,7 +6,8 @@ This game is my [entry](https://js13kgames.com/entries/interplanetary-postal-ser
 
 The original source for the game entry can be found [here](https://github.com/s-macke/Interplanetary-Postal-Service/tree/js13kgames)
 
-# [Play it now!](https://js13kgames.com/games/interplanetary-postal-service/index.html) 
+## [Play the original!](https://js13kgames.com/games/interplanetary-postal-service/index.html) 
+## [Play with stability updates!](https://s-macke.github.io/Interplanetary-Postal-Service/bin/index.html) 
 
 As a postman of the Interplanetary Postal Service your task is to deliver 
 precious mails to our distant colonies. This game lets you control a lander module 
