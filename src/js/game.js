@@ -5,7 +5,6 @@ let nlevel = 8;
 let lastlevel = -2;
 let gamephase = 0; // 0 = normal game, 1 = destroyed and waiting phase, 2 = waiting phase during start
 let ships = 5;
-let collisioncounts = {}; // number of collision pixels
 let fps = 0;
 let frames = 0;
 let score = 0;
@@ -82,24 +81,27 @@ function RoundRect(c, x, y, w, h, r) {
 }
 
 function DrawShip(c, x, y) {
-    c.fillStyle = "#E8EDEEFF";
+    c.clearRect(0, 0, 36+1, 40+1);
+
+    c.fillStyle = "#E8EDEEFD";
+    c.strokeStyle = "#E8EDEEFD";
     RoundRect(c, x - 12, y - 12, 24, 20, 5);
 
-    c.fillStyle = "#B0B6BBFF";
+    c.fillStyle = "#B0B6BBFD";
     c.fillRect(x - 6, y - 15, 12, 3);
     c.fillRect(x - 6, y + 8, 12, 3);
 
-    c.fillStyle = "#232C4DFF";
+    c.fillStyle = "#232C4DFD";
     c.fillRect(x - 6, y + 12, 12, 6);
 
     c.lineWidth = 2;
-    c.strokeStyle = "#B0B6BBFF";
+    c.strokeStyle = "#B0B6BBFD";
     c.beginPath();
     c.arc(x, y - 2, 5, 0, 2 * Math.PI);
     c.stroke();
 
     c.lineWidth = 1.5;
-    c.strokeStyle = "#232C4DFF";
+    c.strokeStyle = "#232C4DFD";
     c.beginPath();
 
     //---
@@ -138,6 +140,14 @@ function DrawShip(c, x, y) {
     c.lineTo(x - 17 + 3, y + 23);
 
     c.stroke();
+/*
+    let data = c.getImageData(0, 0, 36, 40).data;
+    for (let i = 0; i < data.length; i += 4) {
+        if (data[i + 3] > 0x00) {
+            data[i + 3] = 0xFF
+        }
+    }
+ */
 }
 
 // Update the velocity bar and fuel bar
@@ -167,20 +177,33 @@ function UpdateSVGOverlay(c) {
 }
 
 function CollisionDetection() {
-    let c = graphics.overlayctx;
-    c.clearRect(0, 0, graphics.N * 4, graphics.M * 4);
-    c.drawImage(graphics.collisioncanvas, 0, 0);
-    c.drawImage(graphics.shipcanvas, game._ShipGetX() * 4. - 18, game._ShipGetY() * 4. - 20);
+    let data = graphics.collisionctx.getImageData(0, 0, 1024, 512).data;
+    let data2 = graphics.shipctx.getImageData(0, 0, 36, 40).data;
+    let boundarycollision = 0;
+    let landingpadcollision = 0;
+    let xship = Math.floor(game._ShipGetX() * 4 - 18);
+    let yship = Math.floor(game._ShipGetY() * 4. - 20)
+    for (let y=0; y<40; y++) {
+        for (let x = 0; x < 36; x++) {
+            let i = ((y * 36 + x) * 4)|0;
+            if (data2[i + 3] === 0) continue;
+            let xscr = x + xship;
+            let yscr = y + yship;
+            if (xscr < 0 || xscr >= 1024 || yscr < 0 || yscr >= 512) continue;
+            let j = (((yscr) * 1024 + xscr) * 4)|0;
+            if (data[j + 3] !== 0xFF) continue;
+            landingpadcollision += (data[j + 1] === 0xFF) ? 1 : 0;
+            boundarycollision += (data[j + 0] === 0xFF) ? 1 : 0;
+        }
+    }
 
-    let newcollisioncounts = CountCollisionPixels(c);;
-
-    if (Math.abs(newcollisioncounts.boundary - collisioncounts.boundary) > 10) {
+    if (boundarycollision > 10) {
         audio.ThrustOff();
         game._Destroyed();
         return;
     }
 
-    if (Math.abs(newcollisioncounts.landingpad - collisioncounts.landingpad) > 10) {
+    if (landingpadcollision > 10) {
         audio.ThrustOff();
         if (game._ShipGetVY() > 2) {
             game._Destroyed();
@@ -217,18 +240,6 @@ function Draw() {
     }
     UpdateSVGOverlay(c);
 }
-
-function CountCollisionPixels(c) {
-    let boundarycount = 0;
-    let landingpadcount = 0;
-    let data = c.getImageData(0, 0, 1024, 512).data;
-    for (let i = 0; i < data.length; i += 4) {
-        if (data[i + 3] !== 0xFF) continue; // alpha
-        landingpadcount += (data[i + 1] === 0xFF) ? 1 : 0; // green color
-        boundarycount += (data[i + 0] === 0xFF) ? 1 : 0; // red color
-    }
-    return {boundary: boundarycount, landingpad: landingpadcount}
-};
 
 function Loop() {
     if (gamephase === 0) {
@@ -327,8 +338,6 @@ function SetBoundary(c) {
         }
     }
     collisionctx.putImageData(collisionimage, 0, 0);
-    collisioncounts = CountCollisionPixels(collisionctx);
-    console.log(collisioncounts)
     game._FixCells();
 }
 
