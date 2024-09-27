@@ -42,16 +42,14 @@ jobs:
         with:
           node-version: 18
 
-      - name: install wabt
-        uses: chiefbiiko/setup-wabt@1.0.0
-        with:
-           version: 1.0.36
-
 #      - name: npm clean-install
 #        run: npm ci
 
       - name: Install clang
         run: sudo apt-get install clang
+
+      - name: Install wabt
+        run: sudo apt-get install wabt
 
       - name: Build
         run: ./build.sh
