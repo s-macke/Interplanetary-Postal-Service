@@ -48,8 +48,8 @@ jobs:
       - name: Install clang
         run: sudo apt-get install clang
 
-      - name: Install wabt
-        run: sudo apt-get install wabt
+      - name: Install binaryen
+        run: sudo apt-get install binaryen
 
       - name: Build
         run: ./build.sh
