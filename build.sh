@@ -19,7 +19,7 @@ ls -la bin/game.wasm
 # The game can be tested in this directory
 cp src/js/* bin/
 
-exit 1
+exit 0
 
 # minify
 mkdir -p minify
