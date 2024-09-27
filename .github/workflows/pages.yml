@@ -42,8 +42,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: npm clean-install
-        run: npm ci
+#      - name: npm clean-install
+#        run: npm ci
 
       - name: Build
         run: ./build.sh
