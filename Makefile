@@ -2,9 +2,9 @@ all: bin/game.wasm
 
 SOURCES = $(wildcard src/wasm/*.c)
 
-# -Rpass=loop-vectorize -Rpass-missed=loop-vectorize -Rpass-analysis=loop-vectorize
+# -msimd128 -Rpass=loop-vectorize -Rpass-missed=loop-vectorize -Rpass-analysis=loop-vectorize
 bin/game.wasm: $(SOURCES)
-	clang -Ofast -nostdlib --target=wasm32 -msimd128 \
+	clang -Ofast -nostdlib --target=wasm32 \
 	-o bin/game.wasm                       \
 	-Wl,--no-entry                         \
 	-Wl,--gc-sections                      \
