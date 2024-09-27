@@ -31,11 +31,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Clang
-        uses: egor-tensin/setup-clang@v1
-        with:
-          version: 18
-          platform: x64
+#      - name: Set up Clang
+#        uses: egor-tensin/setup-clang@v1
+#        with:
+#          version: 18
+#          platform: x64
 
       - name: Install npm
         uses: actions/setup-node@v4
@@ -44,6 +44,9 @@ jobs:
 
 #      - name: npm clean-install
 #        run: npm ci
+
+      - name: Install clang
+        run: sudo apt-get install clang
 
       - name: Build
         run: ./build.sh
